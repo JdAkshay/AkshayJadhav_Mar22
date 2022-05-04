@@ -1,0 +1,20 @@
+import java.util.*;
+ class Cricket 
+ {
+	 public static void main(String args[])
+	 {
+		 Player players[]= new Player[5];
+    players[0]= new Batsmen("rohit",35);
+    players[1]= new Wicketeeper("Ishaan",25);
+	players[2]= new Bowler("Jofra",28);
+	players[3]= new Allrounder("Sams",30);
+	players[4]= new Batsmen("Suryakumar",30);
+	
+	for(Player player : players)
+	{
+		player.print();
+		System.out.println();
+		System.out.println("--------------");
+	}
+	 }
+ }
