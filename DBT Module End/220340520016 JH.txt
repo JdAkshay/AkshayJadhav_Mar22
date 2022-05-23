@@ -1,0 +1,115 @@
+Section I:-
+
+create table DEPT(
+DEPTNO INT(2),
+DNAME VARCHAR(15),
+LOC VARCHAR(10));
+SELECT * from DEPT;
+
+INSERT INTO DEPT values(10,'ACCOUNTING','NEW YORK'),
+(20,'RESEARCH','DALLAS'),
+(30,'SALES','CHICAGO'),
+(40,'OPERATIONS','BOSTON');
+
+SELECT * FROM DEPT;
+
+create table emp(
+EMPNO INT,
+ENAME VARCHAR(10),
+JOB VARCHAR(9),
+HIREDATE DATE,
+SAL FLOAT,
+COMM FLOAT,
+DEPTNO INT);
+
+insert into emp values
+(7839,'KING', 'MANAGER','1991-11-17',5000,NULL,10),
+(7698,'BLAKE', 'CLERK', '1981-05-01', 2850, NULL, 30),
+(7782,'CLARK' ,'MANAGER', '1981-06-09', 2450, NULL, 10),
+(7566, 'JONES', 'CLERK', '1981-04-02', 2975, NULL, 20),
+(7654, 'MARTIN' ,'SALESMAN', '1981-09-28', 1250, 1400, 30),
+(7499, 'ALLEN', 'SALESMAN', '1981-02-20', 1600, 300, 30);
+
+select * from emp;
+
+/*3. Display all the employees where SAL between 2500 and 5000 (inclusive of both).*/
+select * from emp where SAL BETWEEN 2500 and 5000;
+/*4. Display all the ENAMEs in descending order of ENAME.*/
+Select * from emp ORDER BY ENAME DESC;
+/*5. Display all the JOBs in lowercase.*/
+select lower(JOB) from emp;
+/*6. Display the ENAMEs and the lengths of the ENAMEs.*/
+select ENAME,length(ENAME) from emp;
+/*7. Display the DEPTNO and the count of employees who belong to that DEPTNO .*/
+select DEPTNO,count(*) from emp group by DEPTNO;
+/*8. Display the DNAMEs and the ENAMEs who belong to that DNAME.*/
+select e.ENAME,d.DNAME from emp e join DEPT d on e.DEPTNO=D.DEPTNO;
+/*9. Display the position at which the string ‘AR’ occurs in the ename.*/
+select LOCATE('AR',ENAME) from emp;
+/*10. Display the HRA for each employee given that HRA is 20% of SAL.*/
+select sal, sal*0.20 "HRA" from emp;
+
+
+
+
+
+
+
+
+
+
+Section II
+/*1. Write a stored procedure by the name of PROC1 that accepts two varchar strings
+as parameters. Your procedure should then determine if the first varchar string 
+exists inside the varchar string. For example, if string1 = ‘DAC’ and string2 = 
+‘CDAC, then string1 exists inside string2. The stored procedure should insert the 
+appropriate message into a suitable TEMPP output table. Calling program for the 
+stored procedure need not be written.*/
+
+
+
+create table tempp(
+string1 varchar(100),
+string2 varchar(100),
+msg varchar(100));
+
+delimiter //
+create procedure PROC1(string1 varchar(100),string2 varchar(100))
+begin
+declare msg varchar(100);
+declare num int;
+select LOCATE(string1,string2) into num;
+if num>0 then
+insert into tempp values(string1,string2,'string1 exists in string2');
+else
+insert into tempp values(string1,string2,'string1 does not exists in string2');
+end if;
+select * from tempp;
+end;//
+delimiter //
+
+
+/*2. Create a stored function by the name of FUNC1 to take three parameters, the 
+sides of a triangle. The function should return a Boolean value:- TRUE if the 
+triangle is valid, FALSE otherwise. A triangle is valid if the length of each side is 
+less than the sum of the lengths of the other two sides. Check if the dimensions 
+entered can form a valid triangle. Calling program for the stored function need not 
+be written.*/
+
+
+
+
+delimiter // 
+create function FUNC1(side1 int,side2 int,side3 int)
+returns varchar(100)
+deterministic 
+begin
+if side1+side2>side3 and side2+side3>side1 and side3+side1>side2 then
+return 'TRUE';
+else
+return 'FALSE';
+end if;
+end;//
+delimiter;
+delimiter //
+
